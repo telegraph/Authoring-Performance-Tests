@@ -1,0 +1,4 @@
+{
+  "action": "PUBLISH",
+  "id": "#{id}"
+}
