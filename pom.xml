@@ -14,7 +14,7 @@
     <name>Authoring-Performance-Tests</name>
     <description>Authoring-Performance-Tests</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>11</java.version>
     </properties>
     <dependencies>
         <dependency>
