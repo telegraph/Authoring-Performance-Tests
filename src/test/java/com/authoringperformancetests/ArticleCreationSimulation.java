@@ -55,7 +55,7 @@ public class ArticleCreationSimulation extends Simulation {
   public ArticleCreationSimulation() throws IOException {
     this.setUp(scn.injectOpen(rampUsers(500).during(Duration.ofMinutes(5))))
         .assertions(
-            global().successfulRequests().percent().gt(PERCENTILE),
+            global().successfulRequests().percent().gt(85.0),
             details(CREATE_ARTICLE)
                 .responseTime()
                 .percentile(PERCENTILE)

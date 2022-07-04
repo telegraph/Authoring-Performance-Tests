@@ -22,7 +22,7 @@ public class RequestUtils {
   public static final String VALIDATE_PUBLISH = "validate-article-published";
 
 
-  public static final double PERCENTILE = 85.0;
+  public static final double PERCENTILE = 95.0;
   public static final Integer CREATE_RESPONSE_TIME_THRESHOLD = 1750;
   public static final Integer UPDATE_RESPONSE_TIME_THRESHOLD = 1250;
   public static final Integer PUBLISH_RESPONSE_TIME_THRESHOLD = 8750;
