@@ -27,14 +27,14 @@ pipeline {
                 success {
                     wrap([$class: 'BuildUser']) {
                         slackSend message: "Nightly Authoring Performance Tests Passed Link Here For Report \n" +
-                                " https://jenkins-prod.api-platforms.telegraph.co.uk/job/Dashboard/job/Authoring%20Nightly%20Performance/gatling/",
+                                "https://jenkins-prod.api-platforms.telegraph.co.uk/job/Dashboard/job/Authoring%20Nightly%20Performance/$BUILD_NUMBER/gatling/",
                                 token: env.SLACK_PLATFORMS_RELEASES, channel: env.NOTIFICATIONS_CHANNEL, color: 'good'
                     }
                 }
                 unsuccessful {
                     wrap([$class: 'BuildUser']) {
                         slackSend message: "Nightly Authoring Performance Tests failed Link Here For Report \n" +
-                                " https://jenkins-prod.api-platforms.telegraph.co.uk/job/Dashboard/job/Authoring%20Nightly%20Performance/gatling/",
+                                "https://jenkins-prod.api-platforms.telegraph.co.uk/job/Dashboard/job/Authoring%20Nightly%20Performance/$BUILD_NUMBER/gatling/",
                                 token: env.SLACK_PLATFORMS_RELEASES, channel: env.NOTIFICATIONS_CHANNEL, color: 'danger'
                     }
                 }
