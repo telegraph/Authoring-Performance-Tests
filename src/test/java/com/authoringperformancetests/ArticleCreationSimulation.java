@@ -16,12 +16,14 @@ import java.util.Random;
 import static com.authoringperformancetests.RequestUtils.*;
 import static io.gatling.javaapi.core.CoreDsl.StringBody;
 import static io.gatling.javaapi.core.CoreDsl.asLongAs;
+import static io.gatling.javaapi.core.CoreDsl.atOnceUsers;
 import static io.gatling.javaapi.core.CoreDsl.constantUsersPerSec;
 import static io.gatling.javaapi.core.CoreDsl.details;
 import static io.gatling.javaapi.core.CoreDsl.doIf;
 import static io.gatling.javaapi.core.CoreDsl.exec;
 import static io.gatling.javaapi.core.CoreDsl.global;
 import static io.gatling.javaapi.core.CoreDsl.jsonPath;
+import static io.gatling.javaapi.core.CoreDsl.rampUsers;
 import static io.gatling.javaapi.http.HttpDsl.http;
 import static io.gatling.javaapi.http.HttpDsl.status;
 
@@ -47,36 +49,25 @@ public class ArticleCreationSimulation extends Simulation {
           .pause(1)
           .exec(publishArticleRequest())
           .pause(1)
-          .exec(validatePublishedArticle())
+          //.exec(validatePublishedArticle())
           .pause(1);
 
   public ArticleCreationSimulation() throws IOException {
-    this.setUp(scn.injectOpen(constantUsersPerSec(5).during(Duration.ofSeconds(90))))
-        /*.assertions(
+    this.setUp(scn.injectOpen(rampUsers(500).during(Duration.ofMinutes(5))))
+        .assertions(
             global().successfulRequests().percent().gt(PERCENTILE),
             details(CREATE_ARTICLE)
                 .responseTime()
                 .percentile(PERCENTILE)
                 .lt(CREATE_RESPONSE_TIME_THRESHOLD),
-            details(CREATE_ARTICLE).responseTime().mean().lt(CREATE_RESPONSE_TIME_BASELINE),
             details(UPDATE_ARTICLE)
                 .responseTime()
                 .percentile(PERCENTILE)
                 .lt(UPDATE_RESPONSE_TIME_THRESHOLD),
-            details(UPDATE_ARTICLE).responseTime().mean().lt(UPDATE_RESPONSE_TIME_BASELINE),
             details(PUBLISH_ARTICLE)
                 .responseTime()
                 .percentile(PERCENTILE)
-                .lt(PUBLISH_RESPONSE_TIME_THRESHOLD),
-            details(PUBLISH_ARTICLE).responseTime().mean().lt(PUBLISH_RESPONSE_TIME_BASELINE),
-            details(VALIDATE_PUBLISH)
-                .responseTime()
-                .percentile(PERCENTILE)
-                .lt(PUBLISH_VALIDATED_RESPONSE_TIME_THRESHOLD),
-            details(VALIDATE_PUBLISH)
-                .responseTime()
-                .mean()
-                .lt(PUBLISH_VALIDATED_RESPONSE_TIME_BASELINE))*/
+                .lt(PUBLISH_RESPONSE_TIME_THRESHOLD))
         .protocols(httpProtocol);
   }
 
@@ -90,7 +81,7 @@ public class ArticleCreationSimulation extends Simulation {
         .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
         .body(StringBody(
             "{\n" +
-                "  \"headline\": \"Gatling test " + random.nextLong() + "\",\n" +
+                "  \"headline\": \"new perf tests " + random.nextLong() + "\",\n" +
                 "  \"commentingStatus\": false,\n" +
                 "  \"contentType\": \"article\",\n" +
                 "  \"kicker\": \"test\",\n" +
