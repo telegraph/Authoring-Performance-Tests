@@ -23,7 +23,7 @@ public class RequestUtils {
 
 
   public static final double PERCENTILE = 95.0;
-  public static final Integer CREATE_RESPONSE_TIME_THRESHOLD = 100;
+  public static final Integer CREATE_RESPONSE_TIME_THRESHOLD = 3500;
   public static final Integer UPDATE_RESPONSE_TIME_THRESHOLD = 2500;
   public static final Integer PUBLISH_RESPONSE_TIME_THRESHOLD = 60000;
   public static final Integer NOT_FOUND = 404;
