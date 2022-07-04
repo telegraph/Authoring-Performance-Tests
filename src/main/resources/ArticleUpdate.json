@@ -7,25 +7,25 @@
       "layout": "small",
       "asset": {
         "type": "IMAGE",
-        "imagePath": "/content/dam/badminton/2022/06/29/original.jpeg",
+        "imagePath": "/content/dam/news/2018/05/11/TELEMMGLPICT000163033332.jpeg",
         "imageCropping": {
           "crops": {
             "landscape": {
               "x": 0,
-              "y": 547,
+              "y": 311,
               "width": 10000,
-              "height": 8906
+              "height": 9379
             },
             "portrait": {
-              "x": 2808,
+              "x": 2918,
               "y": 0,
-              "width": 4385,
+              "width": 4164,
               "height": 10000
             },
             "square": {
-              "x": 1492,
+              "x": 1668,
               "y": 0,
-              "width": 7017,
+              "width": 6664,
               "height": 10000
             },
             "custom": {

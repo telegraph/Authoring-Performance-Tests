@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.Random;
 
 import static com.authoringperformancetests.RequestUtils.*;
 import static io.gatling.javaapi.core.CoreDsl.StringBody;
@@ -41,14 +42,17 @@ public class ArticleCreationSimulation extends Simulation {
                       .set(PUBLISH_URL, DEFAULT_SESSION_ATTRIBUTE_VALUE)
                       .set(RETRY_CODE, NOT_FOUND))
           .exec(createArticleRequest())
+          .pause(1)
           .exec(updateArticleRequest())
+          .pause(1)
           .exec(publishArticleRequest())
           .pause(1)
-          .exec(validatePublishedArticle());
+          .exec(validatePublishedArticle())
+          .pause(1);
 
   public ArticleCreationSimulation() throws IOException {
-    this.setUp(scn.injectOpen(constantUsersPerSec(1).during(Duration.ofSeconds(1))))
-        .assertions(
+    this.setUp(scn.injectOpen(constantUsersPerSec(5).during(Duration.ofSeconds(90))))
+        /*.assertions(
             global().successfulRequests().percent().gt(PERCENTILE),
             details(CREATE_ARTICLE)
                 .responseTime()
@@ -72,19 +76,29 @@ public class ArticleCreationSimulation extends Simulation {
             details(VALIDATE_PUBLISH)
                 .responseTime()
                 .mean()
-                .lt(PUBLISH_VALIDATED_RESPONSE_TIME_BASELINE))
+                .lt(PUBLISH_VALIDATED_RESPONSE_TIME_BASELINE))*/
         .protocols(httpProtocol);
   }
 
   private ActionBuilder createArticleRequest() throws IOException {
 
-    String body = new String(Files.readAllBytes(Paths.get(ARTICLE_CREATE_JSON)));
+    Random random = new Random();
 
     return http(CREATE_ARTICLE)
         .post(CONTENT_ENDPOINT)
         .header(CONTENT_TYPE, HEADER_JSON)
         .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
-        .body(StringBody(body))
+        .body(StringBody(
+            "{\n" +
+                "  \"headline\": \"Gatling test " + random.nextLong() + "\",\n" +
+                "  \"commentingStatus\": false,\n" +
+                "  \"contentType\": \"article\",\n" +
+                "  \"kicker\": \"test\",\n" +
+                "  \"evergreen\": true,\n" +
+                "  \"section\": \"/content/telegraph/news\",\n" +
+                "  \"storyType\": \"standard\"\n" +
+                "}"
+        ))
         .check(status().is(CREATED))
         .check(jsonPath("$..id").exists().saveAs(ID));
   }
