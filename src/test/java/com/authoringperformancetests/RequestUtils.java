@@ -10,7 +10,10 @@ public class RequestUtils {
 
   public static final String HEADER_JSON = "application/json";
   public static final String AGENT_HEADER = "Performance Testing";
-  public static final String ID = "id";
+  public static final String ARTICLE_ID = "id";
+  public static final String GALLERY_ID = "id";
+  public static final String LIVE_ARTICLE_ID = "id";
+  public static final String LIVE_POSTS_ID = "postsId";
   public static final String PUBLISH_URL = "publishedUrl";
   public static final String RETRY_CODE = "retryCode";
   public static final String DEFAULT_SESSION_ATTRIBUTE_VALUE = "_";
@@ -26,6 +29,13 @@ public class RequestUtils {
   public static final String PUBLISH_GALLERY = "publish-gallery-workflow-request";
   public static final String VALIDATE_GALLERY_PUBLISH = "validate-gallery-published";
 
+  public static final String CREATE_LIVE_ARTICLE = "create-live-article-request";
+  public static final String UPDATE_LIVE_ARTICLE = "update-live-article-request";
+  public static final String UPDATE_LIVE_POSTS = "update-live-posts-request";
+  public static final String PUBLISH_LIVE_POSTS = "publish-live-posts-workflow-request";
+  public static final String PUBLISH_LIVE_ARTICLE = "publish-live-article-workflow-request";
+  public static final String VALIDATE_LIVE_ARTICLE_PUBLISH = "validate-gallery-published";
+
 
   public static final double PERCENTILE = 95.0;
   public static final Integer CREATE_RESPONSE_TIME_THRESHOLD = 3500;
@@ -37,6 +47,8 @@ public class RequestUtils {
 
   public static final String ARTICLE_UPDATE_JSON = "src/main/resources/ArticleUpdate.json";
   public static final String GALLERY_UPDATE_JSON = "src/main/resources/GalleryUpdate.json";
+  public static final String LIVE_POSTS_UPDATE = "src/main/resources/LivePostsUpdate.json";
+  public static final String LIVE_ARTICLE_UPDATE = "src/main/resources/LiveArticleUpdate.json";
   public static final String PUBLISH_JSON = "src/main/resources/Publish.json";
 
 }

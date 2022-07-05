@@ -1,0 +1,27 @@
+{
+  "components": [
+    {
+      "type": "LIVE_STREAM",
+      "id": "jcr:content/content/liveStream",
+      "posts": [
+        {
+          "type": "LIVE_POST",
+          "headline": "new post",
+          "timestamp": 1657018790224,
+          "body": {
+            "type": "BODY",
+            "components": [
+              {
+                "type": "TEXT",
+                "value": "<p>this is the body of a new post</p>"
+              }
+            ]
+          },
+          "action": "ADD"
+        }
+      ]
+    }
+  ],
+  "publishTime": null,
+  "scheduleTime": null
+}

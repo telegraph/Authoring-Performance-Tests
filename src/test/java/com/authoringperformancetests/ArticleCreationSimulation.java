@@ -40,7 +40,10 @@ public class ArticleCreationSimulation extends Simulation {
           .exec(
               session ->
                   session
-                      .set(ID, DEFAULT_SESSION_ATTRIBUTE_VALUE)
+                      .set(ARTICLE_ID, DEFAULT_SESSION_ATTRIBUTE_VALUE)
+                      .set(GALLERY_ID, DEFAULT_SESSION_ATTRIBUTE_VALUE)
+                      .set(LIVE_ARTICLE_ID, DEFAULT_SESSION_ATTRIBUTE_VALUE)
+                      .set(LIVE_POSTS_ID, DEFAULT_SESSION_ATTRIBUTE_VALUE)
                       .set(PUBLISH_URL, DEFAULT_SESSION_ATTRIBUTE_VALUE)
                       .set(RETRY_CODE, NOT_FOUND))
           .exec(createArticleRequest())
@@ -48,12 +51,22 @@ public class ArticleCreationSimulation extends Simulation {
           .exec(updateArticleRequest())
           .pause(1)
           .exec(publishArticleRequest())
-          .pause(1)
+          .pause(3)
           .exec(createGalleryRequest())
           .pause(1)
           .exec(updateGalleryRequest())
           .pause(1)
           .exec(publishGalleryRequest())
+          .pause(3)
+          .exec(createLiveArticleRequest())
+          .pause(1)
+          .exec(updateLivePostsRequest())
+          .pause(1)
+          .exec(updateLiveArticleRequest())
+          .pause(1)
+          .exec(publishLivePosts())
+          .pause(1)
+          .exec(publishLiveArticle())
           //.exec(validatePublishedArticle())
           .pause(1);
 
@@ -82,14 +95,14 @@ public class ArticleCreationSimulation extends Simulation {
                 "}"
         ))
         .check(status().is(CREATED))
-        .check(jsonPath("$..id").exists().saveAs(ID));
+        .check(jsonPath("$..id").exists().saveAs(ARTICLE_ID));
   }
 
   private ChainBuilder updateArticleRequest() throws IOException {
 
     String body = new String(Files.readAllBytes(Paths.get(ARTICLE_UPDATE_JSON)));
 
-    return doIf(session -> (!session.get(ID).equals("_")))
+    return doIf(session -> (!session.get(ARTICLE_ID).equals("_")))
         .then(
             exec(
                 http(UPDATE_ARTICLE)
@@ -136,14 +149,70 @@ public class ArticleCreationSimulation extends Simulation {
                 "}"
         ))
         .check(status().is(CREATED))
-        .check(jsonPath("$..id").exists().saveAs(ID));
+        .check(jsonPath("$..id").exists().saveAs(GALLERY_ID));
+  }
+
+  private ActionBuilder createLiveArticleRequest() throws IOException {
+
+    Random random = new Random();
+
+    return http(CREATE_GALLERY)
+        .post(CONTENT_ENDPOINT)
+        .header(CONTENT_TYPE, HEADER_JSON)
+        .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
+        .body(StringBody(
+            "{\n" +
+                "  \"headline\": \"new live article perf tests " + random.nextLong() + "\",\n" +
+                "  \"commentingStatus\": false,\n" +
+                "  \"contentType\": \"live-article\",\n" +
+                "  \"kicker\": \"test\",\n" +
+                "  \"evergreen\": true,\n" +
+                "  \"section\": \"/content/telegraph/news\",\n" +
+                "  \"storyType\": \"standard\"\n" +
+                "}"
+        ))
+        .check(status().is(CREATED))
+        .check(jsonPath("$..id").exists().saveAs(LIVE_ARTICLE_ID))
+        .check(jsonPath("$..components[*].livePosts").exists().saveAs(LIVE_POSTS_ID));
+  }
+
+  private ChainBuilder updateLiveArticleRequest() throws IOException {
+
+    String body = new String(Files.readAllBytes(Paths.get(LIVE_ARTICLE_UPDATE)));
+
+    return doIf(session -> (!session.get(LIVE_ARTICLE_ID).equals("_")))
+        .then(
+            exec(
+                http(UPDATE_LIVE_ARTICLE)
+                    .put(UPDATE_ENDPOINT)
+                    .header(CONTENT_TYPE, HEADER_JSON)
+                    .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
+                    .body(StringBody(body))
+                    .check(status().is(OK))
+                    .check(jsonPath("$..externalPath").exists().saveAs(PUBLISH_URL))));
+  }
+
+  private ChainBuilder updateLivePostsRequest() throws IOException {
+
+    String body = new String(Files.readAllBytes(Paths.get(LIVE_POSTS_UPDATE)));
+
+    return doIf(session -> (!session.get(LIVE_POSTS_ID).equals("_")))
+        .then(
+            exec(
+                http(UPDATE_LIVE_POSTS)
+                    .put(UPDATE_ENDPOINT)
+                    .header(CONTENT_TYPE, HEADER_JSON)
+                    .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
+                    .body(StringBody(body))
+                    .check(status().is(OK))
+                    .check(jsonPath("$..externalPath").exists().saveAs(PUBLISH_URL))));
   }
 
   private ChainBuilder updateGalleryRequest() throws IOException {
 
     String body = new String(Files.readAllBytes(Paths.get(GALLERY_UPDATE_JSON)));
 
-    return doIf(session -> (!session.get(ID).equals("_")))
+    return doIf(session -> (!session.get(GALLERY_ID).equals("_")))
         .then(
             exec(
                 http(UPDATE_GALLERY)
@@ -163,6 +232,36 @@ public class ArticleCreationSimulation extends Simulation {
         .then(
             exec(
                 http(PUBLISH_GALLERY)
+                    .post(PUBLISH_ENDPOINT)
+                    .header(CONTENT_TYPE, HEADER_JSON)
+                    .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
+                    .body(StringBody(body))
+                    .check(status().is(CREATED))));
+  }
+
+  private ChainBuilder publishLivePosts() throws IOException {
+
+    String body = new String(Files.readAllBytes(Paths.get(PUBLISH_JSON)));
+
+    return doIf(session -> (!session.get(PUBLISH_URL).equals(DEFAULT_SESSION_ATTRIBUTE_VALUE)))
+        .then(
+            exec(
+                http(PUBLISH_LIVE_POSTS)
+                    .post(PUBLISH_ENDPOINT)
+                    .header(CONTENT_TYPE, HEADER_JSON)
+                    .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
+                    .body(StringBody(body))
+                    .check(status().is(CREATED))));
+  }
+
+  private ChainBuilder publishLiveArticle() throws IOException {
+
+    String body = new String(Files.readAllBytes(Paths.get(PUBLISH_JSON)));
+
+    return doIf(session -> (!session.get(PUBLISH_URL).equals(DEFAULT_SESSION_ATTRIBUTE_VALUE)))
+        .then(
+            exec(
+                http(PUBLISH_LIVE_ARTICLE)
                     .post(PUBLISH_ENDPOINT)
                     .header(CONTENT_TYPE, HEADER_JSON)
                     .basicAuth("Telegraph", "VO9?~A2BC*VtqG")

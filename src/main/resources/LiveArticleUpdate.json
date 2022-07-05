@@ -1,0 +1,84 @@
+{
+  "commentingStatus": false,
+  "components": [
+    {
+      "id": "jcr:content/articlehero",
+      "type": "LEAD_ASSET",
+      "layout": "small",
+      "asset": {
+        "type": "IMAGE",
+        "imagePath": "/content/dam/news/2018/05/11/TELEMMGLPICT000163033332.jpeg",
+        "imageCropping": {
+          "crops": {
+            "landscape": {
+              "x": 0,
+              "y": 311,
+              "width": 10000,
+              "height": 9379
+            },
+            "portrait": {
+              "x": 2918,
+              "y": 0,
+              "width": 4164,
+              "height": 10000
+            },
+            "square": {
+              "x": 1668,
+              "y": 0,
+              "width": 6664,
+              "height": 10000
+            },
+            "custom": {
+              "x": 0,
+              "y": 0,
+              "width": 10000,
+              "height": 10000
+            }
+          },
+          "selected": "landscape"
+        },
+        "alt": "description",
+        "caption": "",
+        "credit": "",
+        "source": ""
+      }
+    },
+    {
+      "id": "/jcr:content/content/paragraph/par",
+      "type": "BODY",
+      "components": [
+        {
+          "type": "TEXT",
+          "value": "<p>adding some body content here</p>"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "type": "KEYWORDS",
+      "tags": [
+        {
+          "label": "Top 14",
+          "disambiguator": "Events",
+          "tagID": "topics:events/top-14",
+          "path": "/etc/tags/topics/events/top-14"
+        },
+        {
+          "path": "/etc/tags/structure/news",
+          "label": "News",
+          "disambiguator": "Structure",
+          "tagID": "structure:news"
+        }
+      ]
+    }
+  ],
+  "dontSyndicate": false,
+  "holdStatus": false,
+  "live": false,
+  "premiumContent": true,
+  "premiumStatusOverride": false,
+  "publishTime": null,
+  "scheduleTime": null,
+  "storyType": "standard",
+  "updatePublishTime": false
+}
