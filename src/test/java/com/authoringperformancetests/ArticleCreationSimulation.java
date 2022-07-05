@@ -113,8 +113,7 @@ public class ArticleCreationSimulation extends Simulation {
                     .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
                     .body(StringBody(body))
                     .check(status().is(OK))
-                    .check(jsonPath("$..externalPath").exists().saveAs(ARTICLE_PUBLISH_URL)))
-                .exec(session -> session.set(ARTICLE_ID, DEFAULT_SESSION_ATTRIBUTE_VALUE)));
+                    .check(jsonPath("$..externalPath").exists().saveAs(ARTICLE_PUBLISH_URL))));
   }
 
   private ChainBuilder publishArticleRequest() throws IOException {
@@ -129,8 +128,7 @@ public class ArticleCreationSimulation extends Simulation {
                     .header(CONTENT_TYPE, HEADER_JSON)
                     .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
                     .body(StringBody(body))
-                    .check(status().is(CREATED)))
-                .exec(session -> session.set(ARTICLE_PUBLISH_URL, DEFAULT_SESSION_ATTRIBUTE_VALUE)));
+                    .check(status().is(CREATED))));
   }
 
   private ActionBuilder createGalleryRequest() throws IOException {
@@ -193,8 +191,7 @@ public class ArticleCreationSimulation extends Simulation {
                     .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
                     .body(StringBody(body))
                     .check(status().is(OK))
-                    .check(jsonPath("$..externalPath").exists().saveAs(LIVE_ARTICLE_PUBLISH_URL)))
-                .exec(session -> session.set(LIVE_ARTICLE_ID, DEFAULT_SESSION_ATTRIBUTE_VALUE)));
+                    .check(jsonPath("$..externalPath").exists().saveAs(LIVE_ARTICLE_PUBLISH_URL))));
   }
 
   private ChainBuilder updateLivePostsRequest() throws IOException {
@@ -210,8 +207,7 @@ public class ArticleCreationSimulation extends Simulation {
                     .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
                     .body(StringBody(body))
                     .check(status().is(OK))
-                    .check(jsonPath("$..externalPath").exists().saveAs(LIVE_POSTS_PUBLISH_URL)))
-                .exec(session -> session.set(LIVE_POSTS_ID, DEFAULT_SESSION_ATTRIBUTE_VALUE)));
+                    .check(jsonPath("$..externalPath").exists().saveAs(LIVE_POSTS_PUBLISH_URL))));
   }
 
   private ChainBuilder updateGalleryRequest() throws IOException {
@@ -227,8 +223,7 @@ public class ArticleCreationSimulation extends Simulation {
                     .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
                     .body(StringBody(body))
                     .check(status().is(OK))
-                    .check(jsonPath("$..externalPath").exists().saveAs(GALLERY_PUBLISH_URL)))
-                .exec(session -> session.set(GALLERY_ID, DEFAULT_SESSION_ATTRIBUTE_VALUE)));
+                    .check(jsonPath("$..externalPath").exists().saveAs(GALLERY_PUBLISH_URL))));
   }
 
   private ChainBuilder publishGalleryRequest() throws IOException {
@@ -243,8 +238,7 @@ public class ArticleCreationSimulation extends Simulation {
                     .header(CONTENT_TYPE, HEADER_JSON)
                     .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
                     .body(StringBody(body))
-                    .check(status().is(CREATED)))
-                .exec(session -> session.set(GALLERY_PUBLISH_URL, DEFAULT_SESSION_ATTRIBUTE_VALUE)));
+                    .check(status().is(CREATED))));
   }
 
   private ChainBuilder publishLivePosts() throws IOException {
@@ -259,8 +253,7 @@ public class ArticleCreationSimulation extends Simulation {
                     .header(CONTENT_TYPE, HEADER_JSON)
                     .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
                     .body(StringBody(body))
-                    .check(status().is(CREATED)))
-                .exec(session -> session.set(LIVE_POSTS_PUBLISH_URL, DEFAULT_SESSION_ATTRIBUTE_VALUE)));
+                    .check(status().is(CREATED))));
   }
 
   private ChainBuilder publishLiveArticle() throws IOException {
@@ -275,8 +268,7 @@ public class ArticleCreationSimulation extends Simulation {
                     .header(CONTENT_TYPE, HEADER_JSON)
                     .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
                     .body(StringBody(body))
-                    .check(status().is(CREATED)))
-                .exec(session -> session.set(LIVE_ARTICLE_PUBLISH_URL, DEFAULT_SESSION_ATTRIBUTE_VALUE)));
+                    .check(status().is(CREATED))));
   }
 
   private ChainBuilder validatePublishedArticle() {
