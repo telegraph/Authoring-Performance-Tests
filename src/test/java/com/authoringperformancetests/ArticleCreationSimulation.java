@@ -49,25 +49,16 @@ public class ArticleCreationSimulation extends Simulation {
           .pause(1)
           .exec(publishArticleRequest())
           .pause(1)
+          .exec(createGalleryRequest())
+          .pause(1)
+          .exec(updateGalleryRequest())
+          .pause(1)
+          .exec(publishGalleryRequest())
           //.exec(validatePublishedArticle())
           .pause(1);
 
   public ArticleCreationSimulation() throws IOException {
     this.setUp(scn.injectOpen(rampUsers(150).during(Duration.ofMinutes(5))))
-        .assertions(
-            global().successfulRequests().percent().gt(85.0),
-            details(CREATE_ARTICLE)
-                .responseTime()
-                .percentile(PERCENTILE)
-                .lt(CREATE_RESPONSE_TIME_THRESHOLD),
-            details(UPDATE_ARTICLE)
-                .responseTime()
-                .percentile(PERCENTILE)
-                .lt(UPDATE_RESPONSE_TIME_THRESHOLD),
-            details(PUBLISH_ARTICLE)
-                .responseTime()
-                .percentile(PERCENTILE)
-                .lt(PUBLISH_RESPONSE_TIME_THRESHOLD))
         .protocols(httpProtocol);
   }
 
@@ -118,6 +109,60 @@ public class ArticleCreationSimulation extends Simulation {
         .then(
             exec(
                 http(PUBLISH_ARTICLE)
+                    .post(PUBLISH_ENDPOINT)
+                    .header(CONTENT_TYPE, HEADER_JSON)
+                    .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
+                    .body(StringBody(body))
+                    .check(status().is(CREATED))));
+  }
+
+  private ActionBuilder createGalleryRequest() throws IOException {
+
+    Random random = new Random();
+
+    return http(CREATE_GALLERY)
+        .post(CONTENT_ENDPOINT)
+        .header(CONTENT_TYPE, HEADER_JSON)
+        .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
+        .body(StringBody(
+            "{\n" +
+                "  \"headline\": \"new gallery perf tests " + random.nextLong() + "\",\n" +
+                "  \"commentingStatus\": false,\n" +
+                "  \"contentType\": \"gallery\",\n" +
+                "  \"kicker\": \"test\",\n" +
+                "  \"evergreen\": true,\n" +
+                "  \"section\": \"/content/telegraph/news\",\n" +
+                "  \"storyType\": \"standard\"\n" +
+                "}"
+        ))
+        .check(status().is(CREATED))
+        .check(jsonPath("$..id").exists().saveAs(ID));
+  }
+
+  private ChainBuilder updateGalleryRequest() throws IOException {
+
+    String body = new String(Files.readAllBytes(Paths.get(GALLERY_UPDATE_JSON)));
+
+    return doIf(session -> (!session.get(ID).equals("_")))
+        .then(
+            exec(
+                http(UPDATE_GALLERY)
+                    .put(UPDATE_ENDPOINT)
+                    .header(CONTENT_TYPE, HEADER_JSON)
+                    .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
+                    .body(StringBody(body))
+                    .check(status().is(OK))
+                    .check(jsonPath("$..externalPath").exists().saveAs(PUBLISH_URL))));
+  }
+
+  private ChainBuilder publishGalleryRequest() throws IOException {
+
+    String body = new String(Files.readAllBytes(Paths.get(PUBLISH_JSON)));
+
+    return doIf(session -> (!session.get(PUBLISH_URL).equals(DEFAULT_SESSION_ATTRIBUTE_VALUE)))
+        .then(
+            exec(
+                http(PUBLISH_GALLERY)
                     .post(PUBLISH_ENDPOINT)
                     .header(CONTENT_TYPE, HEADER_JSON)
                     .basicAuth("Telegraph", "VO9?~A2BC*VtqG")

@@ -53,22 +53,7 @@ public class GalleryCreationSimulation extends Simulation {
           .pause(1);
 
   public GalleryCreationSimulation() throws IOException {
-    this.setUp(scn.injectOpen(rampUsers(150).during(Duration.ofMinutes(5))))
-        .assertions(
-            global().successfulRequests().percent().gt(85.0),
-            details(CREATE_GALLERY)
-                .responseTime()
-                .percentile(PERCENTILE)
-                .lt(CREATE_RESPONSE_TIME_THRESHOLD),
-            details(UPDATE_GALLERY)
-                .responseTime()
-                .percentile(PERCENTILE)
-                .lt(UPDATE_RESPONSE_TIME_THRESHOLD),
-            details(PUBLISH_GALLERY)
-                .responseTime()
-                .percentile(PERCENTILE)
-                .lt(PUBLISH_RESPONSE_TIME_THRESHOLD))
-        .protocols(httpProtocol);
+   
   }
 
   private ActionBuilder createGalleryRequest() throws IOException {
