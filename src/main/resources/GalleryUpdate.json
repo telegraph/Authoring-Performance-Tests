@@ -1,0 +1,130 @@
+{
+  "commentingStatus": false,
+  "components": [
+    {
+      "id": "jcr:content/content/gallery-list",
+      "type": "GALLERY",
+      "images": [
+        {
+          "type": "IMAGE",
+          "imagePath": "/content/dam/news/2020/11/23/GettyImages-1176850091.jpg",
+          "imageCropping": {
+            "crops": {
+              "landscape": {
+                "x": 0,
+                "y": 313,
+                "width": 10000,
+                "height": 9375
+              },
+              "portrait": {
+                "x": 2917,
+                "y": 0,
+                "width": 4167,
+                "height": 10000
+              },
+              "square": {
+                "x": 1667,
+                "y": 0,
+                "width": 6667,
+                "height": 10000
+              },
+              "custom": {
+                "x": 0,
+                "y": 0,
+                "width": 10000,
+                "height": 10000
+              }
+            },
+            "selected": "landscape"
+          },
+          "alt": "eifel tower",
+          "caption": "",
+          "credit": "",
+          "source": "",
+          "title": ""
+        },
+        {
+          "type": "IMAGE",
+          "imagePath": "/content/dam/news/2022/06/10/file7561294493011.jpg",
+          "imageCropping": {
+            "crops": {
+              "landscape": {
+                "x": 0,
+                "y": 315,
+                "width": 10000,
+                "height": 9370
+              },
+              "portrait": {
+                "x": 2916,
+                "y": 0,
+                "width": 4170,
+                "height": 10000
+              },
+              "square": {
+                "x": 1666,
+                "y": 0,
+                "width": 6670,
+                "height": 10000
+              },
+              "custom": {
+                "x": 0,
+                "y": 0,
+                "width": 10000,
+                "height": 10000
+              }
+            },
+            "selected": "landscape"
+          },
+          "alt": "description for image 1",
+          "caption": "",
+          "credit": "",
+          "source": "",
+          "title": ""
+        }
+      ]
+    },
+    {
+      "id": "jcr:content/content/authorPath",
+      "type": "BYLINE",
+      "authors": [
+        {
+          "type": "AUTHOR",
+          "id": "/content/telegraph/authors/b/ba-be/benjamin-obese-jecty",
+          "fullName": "Benjamin Obese-Jecty",
+          "role": "",
+          "location": ""
+        }
+      ]
+    },
+    {
+      "id": "/jcr:content/content/standfirst",
+      "type": "STANDFIRST",
+      "value": "this is the standfirst"
+    },
+    {
+      "id": "",
+      "type": "KEYWORDS",
+      "tags": [
+        {
+          "label": "Sports Personality of the Year",
+          "disambiguator": "Events",
+          "tagID": "topics:events/sports-personality-year",
+          "path": "/etc/tags/topics/events/sports-personality-year"
+        },
+        {
+          "path": "/etc/tags/structure/news",
+          "label": "News",
+          "disambiguator": "Structure",
+          "tagID": "structure:news"
+        }
+      ]
+    }
+  ],
+  "dontSyndicate": true,
+  "holdStatus": false,
+  "premiumContent": true,
+  "premiumStatusOverride": false,
+  "publishTime": null,
+  "scheduleTime": null,
+  "updatePublishTime": false
+}

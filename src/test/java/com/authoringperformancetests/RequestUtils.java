@@ -21,6 +21,11 @@ public class RequestUtils {
   public static final String PUBLISH_ARTICLE = "publish-article-workflow-request";
   public static final String VALIDATE_PUBLISH = "validate-article-published";
 
+  public static final String CREATE_GALLERY = "create-gallery-request";
+  public static final String UPDATE_GALLERY = "update-gallery-request";
+  public static final String PUBLISH_GALLERY = "publish-gallery-workflow-request";
+  public static final String VALIDATE_GALLERY_PUBLISH = "validate-gallery-published";
+
 
   public static final double PERCENTILE = 95.0;
   public static final Integer CREATE_RESPONSE_TIME_THRESHOLD = 3500;
@@ -31,6 +36,7 @@ public class RequestUtils {
   public static final Integer CREATED = 201;
 
   public static final String ARTICLE_UPDATE_JSON = "src/main/resources/ArticleUpdate.json";
+  public static final String GALLERY_UPDATE_JSON = "src/main/resources/GalleryUpdate.json";
   public static final String PUBLISH_JSON = "src/main/resources/Publish.json";
 
 }
