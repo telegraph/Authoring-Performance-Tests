@@ -36,7 +36,7 @@ public class ArticleCreationSimulation extends Simulation {
           .disableFollowRedirect();
 
   ScenarioBuilder scn =
-      CoreDsl.scenario("Load Test Creating Article")
+      CoreDsl.scenario("Load Testing Authoring")
           .exec(
               session ->
                   session
@@ -58,7 +58,7 @@ public class ArticleCreationSimulation extends Simulation {
           .pause(1);
 
   public ArticleCreationSimulation() throws IOException {
-    this.setUp(scn.injectOpen(rampUsers(150).during(Duration.ofMinutes(5))))
+    this.setUp(scn.injectOpen(rampUsers(70).during(Duration.ofMinutes(5))))
         .protocols(httpProtocol);
   }
 

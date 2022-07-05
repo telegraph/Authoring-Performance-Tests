@@ -1,35 +1,8 @@
 package com.authoringperformancetests;
 
-import io.gatling.javaapi.core.ActionBuilder;
-import io.gatling.javaapi.core.ChainBuilder;
-import io.gatling.javaapi.core.CoreDsl;
-import io.gatling.javaapi.core.ScenarioBuilder;
-import io.gatling.javaapi.core.Simulation;
-import io.gatling.javaapi.http.HttpProtocolBuilder;
+public class GalleryCreationSimulation {
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.Duration;
-import java.util.Random;
-
-import static com.authoringperformancetests.RequestUtils.*;
-import static io.gatling.javaapi.core.CoreDsl.StringBody;
-import static io.gatling.javaapi.core.CoreDsl.asLongAs;
-import static io.gatling.javaapi.core.CoreDsl.atOnceUsers;
-import static io.gatling.javaapi.core.CoreDsl.constantUsersPerSec;
-import static io.gatling.javaapi.core.CoreDsl.details;
-import static io.gatling.javaapi.core.CoreDsl.doIf;
-import static io.gatling.javaapi.core.CoreDsl.exec;
-import static io.gatling.javaapi.core.CoreDsl.global;
-import static io.gatling.javaapi.core.CoreDsl.jsonPath;
-import static io.gatling.javaapi.core.CoreDsl.rampUsers;
-import static io.gatling.javaapi.http.HttpDsl.http;
-import static io.gatling.javaapi.http.HttpDsl.status;
-
-public class GalleryCreationSimulation extends Simulation {
-
-  HttpProtocolBuilder httpProtocol =
+  /*HttpProtocolBuilder httpProtocol =
       http.baseUrl(BASE_URL)
           .acceptHeader(HEADER_JSON)
           .userAgentHeader(AGENT_HEADER)
@@ -53,7 +26,7 @@ public class GalleryCreationSimulation extends Simulation {
           .pause(1);
 
   public GalleryCreationSimulation() throws IOException {
-   
+
   }
 
   private ActionBuilder createGalleryRequest() throws IOException {
@@ -119,5 +92,5 @@ public class GalleryCreationSimulation extends Simulation {
                         http(VALIDATE_PUBLISH)
                             .get(PUBLISHER_URL)
                             .check(status().not(NOT_FOUND).saveAs(RETRY_CODE)))));
-  }
+  }*/
 }
