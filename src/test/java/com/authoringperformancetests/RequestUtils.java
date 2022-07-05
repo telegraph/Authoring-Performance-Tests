@@ -14,7 +14,10 @@ public class RequestUtils {
   public static final String GALLERY_ID = "id";
   public static final String LIVE_ARTICLE_ID = "id";
   public static final String LIVE_POSTS_ID = "postsId";
-  public static final String PUBLISH_URL = "publishedUrl";
+  public static final String ARTICLE_PUBLISH_URL = "publishedUrl";
+  public static final String GALLERY_PUBLISH_URL = "publishedUrl";
+  public static final String LIVE_ARTICLE_PUBLISH_URL = "publishedUrl";
+  public static final String LIVE_POSTS_PUBLISH_URL = "publishedUrl";
   public static final String RETRY_CODE = "retryCode";
   public static final String DEFAULT_SESSION_ATTRIBUTE_VALUE = "_";
   public static final String CONTENT_TYPE = "Content-Type";
