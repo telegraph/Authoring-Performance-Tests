@@ -156,7 +156,7 @@ public class ArticleCreationSimulation extends Simulation {
 
     Random random = new Random();
 
-    return http(CREATE_GALLERY)
+    return http(CREATE_LIVE_ARTICLE)
         .post(CONTENT_ENDPOINT)
         .header(CONTENT_TYPE, HEADER_JSON)
         .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
