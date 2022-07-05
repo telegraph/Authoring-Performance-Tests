@@ -53,7 +53,7 @@ public class ArticleCreationSimulation extends Simulation {
           .pause(1);
 
   public ArticleCreationSimulation() throws IOException {
-    this.setUp(scn.injectOpen(rampUsers(500).during(Duration.ofMinutes(5))))
+    this.setUp(scn.injectOpen(rampUsers(70).during(Duration.ofMinutes(5))))
         .assertions(
             global().successfulRequests().percent().gt(85.0),
             details(CREATE_ARTICLE)
