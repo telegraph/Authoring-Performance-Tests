@@ -2,5 +2,5 @@
   "headline": "Gallery Load Testing ${uuid}",
   "contentType": "gallery",
   "evergreen": true,
-  "section": "/content/telegraph/performance/0/gatling"
+  "section": "/content/telegraph/american-football"
 }
