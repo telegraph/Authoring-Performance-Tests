@@ -36,6 +36,7 @@ import static com.authoringperformancetests.RequestUtils.RETRY_CODE;
 import static com.authoringperformancetests.RequestUtils.UPDATE_ENDPOINT;
 import static com.authoringperformancetests.RequestUtils.UPDATE_LIVE_ARTICLE;
 import static com.authoringperformancetests.RequestUtils.UPDATE_LIVE_POSTS;
+import static com.authoringperformancetests.RequestUtils.UPDATE_LIVE_POSTS_ENDPOINT;
 import static io.gatling.javaapi.core.CoreDsl.StringBody;
 import static io.gatling.javaapi.core.CoreDsl.doIf;
 import static io.gatling.javaapi.core.CoreDsl.exec;
@@ -77,7 +78,7 @@ public class LiveArticlePerformance extends Simulation {
           .pause(1);
 
   public LiveArticlePerformance() throws IOException {
-    this.setUp(scn.injectOpen(rampUsers(70).during(Duration.ofSeconds(10))))
+    this.setUp(scn.injectOpen(rampUsers(70).during(Duration.ofMinutes(5))))
         .protocols(httpProtocol);
   }
 
@@ -127,7 +128,7 @@ public class LiveArticlePerformance extends Simulation {
         .then(
             exec(
                 http(UPDATE_LIVE_POSTS)
-                    .put(UPDATE_ENDPOINT)
+                    .put(UPDATE_LIVE_POSTS_ENDPOINT)
                     .header(CONTENT_TYPE, HEADER_JSON)
                     .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
                     .body(StringBody(body))
