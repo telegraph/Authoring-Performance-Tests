@@ -13,16 +13,12 @@ import java.nio.file.Paths;
 import java.time.Duration;
 
 import static com.authoringperformancetests.RequestUtils.AGENT_HEADER;
-import static com.authoringperformancetests.RequestUtils.ARTICLE_ID;
-import static com.authoringperformancetests.RequestUtils.ARTICLE_PUBLISH_URL;
 import static com.authoringperformancetests.RequestUtils.BASE_URL;
 import static com.authoringperformancetests.RequestUtils.CONTENT_ENDPOINT;
 import static com.authoringperformancetests.RequestUtils.CONTENT_TYPE;
 import static com.authoringperformancetests.RequestUtils.CREATED;
 import static com.authoringperformancetests.RequestUtils.CREATE_LIVE_ARTICLE;
 import static com.authoringperformancetests.RequestUtils.DEFAULT_SESSION_ATTRIBUTE_VALUE;
-import static com.authoringperformancetests.RequestUtils.GALLERY_ID;
-import static com.authoringperformancetests.RequestUtils.GALLERY_PUBLISH_URL;
 import static com.authoringperformancetests.RequestUtils.HEADER_JSON;
 import static com.authoringperformancetests.RequestUtils.LIVE_ARTICLE_ID;
 import static com.authoringperformancetests.RequestUtils.LIVE_ARTICLE_PUBLISH_URL;
@@ -81,7 +77,7 @@ public class LiveArticlePerformance extends Simulation {
           .pause(1);
 
   public LiveArticlePerformance() throws IOException {
-    this.setUp(scn.injectOpen(rampUsers(70).during(Duration.ofSeconds(5))))
+    this.setUp(scn.injectOpen(rampUsers(70).during(Duration.ofSeconds(10))))
         .protocols(httpProtocol);
   }
 

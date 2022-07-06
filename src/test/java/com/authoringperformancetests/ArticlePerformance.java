@@ -48,7 +48,7 @@ public class ArticlePerformance extends Simulation {
           .exec(publishArticleRequest());
 
   public ArticlePerformance() throws IOException {
-    this.setUp(scn.injectOpen(rampUsers(70).during(Duration.ofSeconds(5))))
+    this.setUp(scn.injectOpen(rampUsers(70).during(Duration.ofSeconds(10))))
         .protocols(httpProtocol);
   }
 

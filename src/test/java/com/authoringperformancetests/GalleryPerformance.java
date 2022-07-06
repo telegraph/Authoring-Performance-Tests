@@ -69,7 +69,7 @@ public class GalleryPerformance extends Simulation {
           .exec(publishGalleryRequest());
 
   public GalleryPerformance() throws IOException {
-    this.setUp(scn.injectOpen(rampUsers(70).during(Duration.ofMinutes(5))))
+    this.setUp(scn.injectOpen(rampUsers(70).during(Duration.ofMinutes(10))))
         .protocols(httpProtocol);
   }
 
