@@ -40,7 +40,7 @@ public class RequestUtils {
   public static final String PUBLISH_LIVE_ARTICLE = "publish-live-article-workflow-request";
   public static final String VALIDATE_LIVE_ARTICLE_PUBLISH = "validate-gallery-published";
 
-  public static final Integer USERS = 1;
+  public static final Integer USERS = 70;
   public static final Integer TIME = 2;
   public static final double PERCENTILE = 95.0;
   public static final Integer CREATE_RESPONSE_TIME_THRESHOLD = 3500;

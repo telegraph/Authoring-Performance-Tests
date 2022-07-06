@@ -2,7 +2,6 @@
   "headline": "Article Load Testing ${uuid}",
   "commentingStatus": false,
   "contentType": "article",
-  "kicker": "test",
   "evergreen": true,
   "section": "/content/telegraph/performance/0/gatling",
   "storyType": "standard"

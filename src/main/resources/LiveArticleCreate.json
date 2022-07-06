@@ -1,9 +1,7 @@
 {
   "headline": "Live Article Load Testing ${uuid}",
-  "commentingStatus": false,
   "contentType": "live-article",
-  "kicker": "test",
+  "kicker": "kicker value",
   "evergreen": true,
-  "section": "/content/telegraph/performance/0/gatling",
-  "storyType": "standard"
+  "section": "/content/telegraph/performance/0/gatling"
 }

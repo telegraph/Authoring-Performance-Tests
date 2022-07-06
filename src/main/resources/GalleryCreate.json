@@ -1,9 +1,6 @@
 {
   "headline": "Gallery Load Testing ${uuid}",
-  "commentingStatus": false,
   "contentType": "gallery",
-  "kicker": "test",
   "evergreen": true,
-  "section": "/content/telegraph/performance/0/gatling",
-  "storyType": "standard"
+  "section": "/content/telegraph/performance/0/gatling"
 }
