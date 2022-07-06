@@ -26,6 +26,7 @@ import static com.authoringperformancetests.RequestUtils.CONTENT_TYPE;
 import static com.authoringperformancetests.RequestUtils.CREATED;
 import static com.authoringperformancetests.RequestUtils.CREATE_GALLERY;
 import static com.authoringperformancetests.RequestUtils.DEFAULT_SESSION_ATTRIBUTE_VALUE;
+import static com.authoringperformancetests.RequestUtils.GALLERY_CREATE_JSON;
 import static com.authoringperformancetests.RequestUtils.GALLERY_ID;
 import static com.authoringperformancetests.RequestUtils.GALLERY_PUBLISH_URL;
 import static com.authoringperformancetests.RequestUtils.GALLERY_UPDATE_JSON;
@@ -37,8 +38,10 @@ import static com.authoringperformancetests.RequestUtils.PUBLISH_ENDPOINT;
 import static com.authoringperformancetests.RequestUtils.PUBLISH_GALLERY;
 import static com.authoringperformancetests.RequestUtils.PUBLISH_JSON;
 import static com.authoringperformancetests.RequestUtils.RETRY_CODE;
+import static com.authoringperformancetests.RequestUtils.TIME;
 import static com.authoringperformancetests.RequestUtils.UPDATE_ENDPOINT;
 import static com.authoringperformancetests.RequestUtils.UPDATE_GALLERY;
+import static com.authoringperformancetests.RequestUtils.USERS;
 import static com.authoringperformancetests.RequestUtils.VALIDATE_PUBLISH;
 import static io.gatling.javaapi.core.CoreDsl.StringBody;
 import static io.gatling.javaapi.core.CoreDsl.asLongAs;
@@ -82,27 +85,19 @@ public class GalleryPerformance extends Simulation {
           .exec(publishGalleryRequest());
 
   public GalleryPerformance() throws IOException {
-    this.setUp(scn.injectOpen(rampUsers(70).during(Duration.ofMinutes(5))))
+    this.setUp(scn.injectOpen(rampUsers(USERS).during(Duration.ofMinutes(TIME))))
         .protocols(httpProtocol);
   }
 
   private ActionBuilder createGalleryRequest() throws IOException {
 
+    String body = new String(Files.readAllBytes(Paths.get(GALLERY_CREATE_JSON)));
+
     return http(CREATE_GALLERY)
         .post(CONTENT_ENDPOINT)
         .header(CONTENT_TYPE, HEADER_JSON)
         .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
-        .body(StringBody(
-            "{\n" +
-                "  \"headline\": \"Gallery Load Testing ${uuid}\",\n" +
-                "  \"commentingStatus\": false,\n" +
-                "  \"contentType\": \"gallery\",\n" +
-                "  \"kicker\": \"test\",\n" +
-                "  \"evergreen\": true,\n" +
-                "  \"section\": \"/content/telegraph/performance/0/gatling\",\n" +
-                "  \"storyType\": \"standard\"\n" +
-                "}"
-        ))
+        .body(StringBody(body))
         .check(status().is(CREATED))
         .check(jsonPath("$..id").exists().saveAs(GALLERY_ID));
   }

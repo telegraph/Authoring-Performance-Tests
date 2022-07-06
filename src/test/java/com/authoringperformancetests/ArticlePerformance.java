@@ -61,27 +61,19 @@ public class ArticlePerformance extends Simulation {
           .exec(publishArticleRequest());
 
   public ArticlePerformance() throws IOException {
-    this.setUp(scn.injectOpen(rampUsers(70).during(Duration.ofMinutes(5))))
+    this.setUp(scn.injectOpen(rampUsers(USERS).during(Duration.ofMinutes(TIME))))
         .protocols(httpProtocol);
   }
 
   private ActionBuilder createArticleRequest() throws IOException {
 
+    String body = new String(Files.readAllBytes(Paths.get(ARTICLE_CREATE_JSON)));
+
     return http(CREATE_ARTICLE)
         .post(CONTENT_ENDPOINT)
         .header(CONTENT_TYPE, HEADER_JSON)
         .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
-        .body(StringBody(
-            "{\n" +
-                "  \"headline\": \"Article Load Testing ${uuid}\",\n" +
-                "  \"commentingStatus\": false,\n" +
-                "  \"contentType\": \"article\",\n" +
-                "  \"kicker\": \"test\",\n" +
-                "  \"evergreen\": true,\n" +
-                "  \"section\": \"/content/telegraph/performance/0/gatling\",\n" +
-                "  \"storyType\": \"standard\"\n" +
-                "}"
-        ))
+        .body(StringBody(body))
         .check(status().is(CREATED))
         .check(jsonPath("$..id").exists().saveAs(ARTICLE_ID));
   }

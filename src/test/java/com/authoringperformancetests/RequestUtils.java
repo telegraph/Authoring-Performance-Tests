@@ -40,7 +40,8 @@ public class RequestUtils {
   public static final String PUBLISH_LIVE_ARTICLE = "publish-live-article-workflow-request";
   public static final String VALIDATE_LIVE_ARTICLE_PUBLISH = "validate-gallery-published";
 
-
+  public static final Integer USERS = 70;
+  public static final Integer TIME = 5;
   public static final double PERCENTILE = 95.0;
   public static final Integer CREATE_RESPONSE_TIME_THRESHOLD = 3500;
   public static final Integer UPDATE_RESPONSE_TIME_THRESHOLD = 2500;
@@ -50,9 +51,12 @@ public class RequestUtils {
   public static final Integer CREATED = 201;
 
   public static final String ARTICLE_UPDATE_JSON = "src/main/resources/ArticleUpdate.json";
+  public static final String ARTICLE_CREATE_JSON = "src/main/resources/ArticleCreate.json";
   public static final String GALLERY_UPDATE_JSON = "src/main/resources/GalleryUpdate.json";
-  public static final String LIVE_POSTS_UPDATE = "src/main/resources/LivePostsUpdate.json";
-  public static final String LIVE_ARTICLE_UPDATE = "src/main/resources/LiveArticleUpdate.json";
+  public static final String GALLERY_CREATE_JSON = "src/main/resources/GalleryCreate.json";
+  public static final String LIVE_POSTS_UPDATE_JSON = "src/main/resources/LivePostsUpdate.json";
+  public static final String LIVE_ARTICLE_UPDATE_JSON = "src/main/resources/LiveArticleUpdate.json";
+  public static final String LIVE_ARTICLE_CREATE_JSON = "src/main/resources/LiveArticleUpdate.json";
   public static final String PUBLISH_JSON = "src/main/resources/Publish.json";
 
 }
