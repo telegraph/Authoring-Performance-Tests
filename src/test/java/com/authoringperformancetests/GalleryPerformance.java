@@ -69,7 +69,7 @@ public class GalleryPerformance extends Simulation {
           .exec(publishGalleryRequest());
 
   public GalleryPerformance() throws IOException {
-    this.setUp(scn.injectOpen(rampUsers(5).during(Duration.ofSeconds(20))))
+    this.setUp(scn.injectOpen(rampUsers(70).during(Duration.ofMinutes(5))))
         .protocols(httpProtocol);
   }
 
@@ -86,7 +86,7 @@ public class GalleryPerformance extends Simulation {
                 "  \"contentType\": \"gallery\",\n" +
                 "  \"kicker\": \"test\",\n" +
                 "  \"evergreen\": true,\n" +
-                "  \"section\": \"/content/telegraph/news\",\n" +
+                "  \"section\": \"/content/telegraph/performance/0/gatling\",\n" +
                 "  \"storyType\": \"standard\"\n" +
                 "}"
         ))

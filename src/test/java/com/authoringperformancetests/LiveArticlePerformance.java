@@ -81,7 +81,7 @@ public class LiveArticlePerformance extends Simulation {
           .pause(1);
 
   public LiveArticlePerformance() throws IOException {
-    this.setUp(scn.injectOpen(rampUsers(5).during(Duration.ofSeconds(20))))
+    this.setUp(scn.injectOpen(rampUsers(70).during(Duration.ofSeconds(5))))
         .protocols(httpProtocol);
   }
 
@@ -98,7 +98,7 @@ public class LiveArticlePerformance extends Simulation {
                 "  \"contentType\": \"live-article\",\n" +
                 "  \"kicker\": \"test\",\n" +
                 "  \"evergreen\": true,\n" +
-                "  \"section\": \"/content/telegraph/news\",\n" +
+                "  \"section\": \"/content/telegraph/performance/0/gatling\",\n" +
                 "  \"storyType\": \"standard\"\n" +
                 "}"
         ))
