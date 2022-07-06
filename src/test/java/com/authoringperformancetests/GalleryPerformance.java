@@ -11,6 +11,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.UUID;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import static com.authoringperformancetests.RequestUtils.AGENT_HEADER;
 import static com.authoringperformancetests.RequestUtils.ARTICLE_PUBLISH_URL;
@@ -51,6 +57,12 @@ public class GalleryPerformance extends Simulation {
           .userAgentHeader(AGENT_HEADER)
           .disableFollowRedirect();
 
+  Iterator<Map<String, Object>> feeder =
+      Stream.generate((Supplier<Map<String, Object>>) () -> {
+            String uuid = UUID.randomUUID().toString();
+            return Collections.singletonMap("uuid", uuid);
+          }
+      ).iterator();
 
   ScenarioBuilder scn =
       CoreDsl.scenario("Load Testing Galleries")
@@ -62,6 +74,7 @@ public class GalleryPerformance extends Simulation {
                     .set(RETRY_CODE, NOT_FOUND);
                 return session;
               })
+          .feed(feeder)
           .exec(createGalleryRequest())
           .pause(1)
           .exec(updateGalleryRequest())
@@ -81,7 +94,7 @@ public class GalleryPerformance extends Simulation {
         .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
         .body(StringBody(
             "{\n" +
-                "  \"headline\": \"Gallery Load Testing " + System.currentTimeMillis() + "\",\n" +
+                "  \"headline\": \"Gallery Load Testing ${uuid}\",\n" +
                 "  \"commentingStatus\": false,\n" +
                 "  \"contentType\": \"gallery\",\n" +
                 "  \"kicker\": \"test\",\n" +
