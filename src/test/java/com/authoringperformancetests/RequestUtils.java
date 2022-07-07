@@ -56,7 +56,7 @@ public class RequestUtils {
   public static final String GALLERY_CREATE_JSON = "src/main/resources/GalleryCreate.json";
   public static final String LIVE_POSTS_UPDATE_JSON = "src/main/resources/LivePostsUpdate.json";
   public static final String LIVE_ARTICLE_UPDATE_JSON = "src/main/resources/LiveArticleUpdate.json";
-  public static final String LIVE_ARTICLE_CREATE_JSON = "src/main/resources/LiveArticleUpdate.json";
+  public static final String LIVE_ARTICLE_CREATE_JSON = "src/main/resources/LiveArticleCreate.json";
   public static final String PUBLISH_JSON = "src/main/resources/Publish.json";
 
 }
