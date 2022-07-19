@@ -211,13 +211,13 @@ public class LiveArticlePerformance extends Simulation {
     return asLongAsDuring(session -> !session.get(RETRY_CODE).equals(OK), Duration.ofMillis(PUBLISH_RESPONSE_TIME_THRESHOLD)).on(
         exec(
             http(VALIDATE_LIVE_ARTICLE_PUBLISH)
-                .get(LIVE_ARTICLE_PUBLISH_URL)
+                .get(PUBLISHER_URL)
                 .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
                 .check(status().saveAs(RETRY_CODE)))
             .pause(1)
     ).exec(
         http(VALIDATE_LIVE_ARTICLE_PUBLISH)
-            .get(LIVE_ARTICLE_PUBLISH_URL)
+            .get(PUBLISHER_URL)
             .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
             .check(status().is(OK).saveAs(RETRY_CODE)));
   }

@@ -35,6 +35,7 @@ import static com.authoringperformancetests.RequestUtils.HEADER_JSON;
 import static com.authoringperformancetests.RequestUtils.NOT_FOUND;
 import static com.authoringperformancetests.RequestUtils.OK;
 import static com.authoringperformancetests.RequestUtils.PERCENTILE;
+import static com.authoringperformancetests.RequestUtils.PUBLISHER_URL;
 import static com.authoringperformancetests.RequestUtils.PUBLISH_ARTICLE;
 import static com.authoringperformancetests.RequestUtils.PUBLISH_ENDPOINT;
 import static com.authoringperformancetests.RequestUtils.PUBLISH_GALLERY;
@@ -162,13 +163,13 @@ public class GalleryPerformance extends Simulation {
     return asLongAsDuring(session -> !session.get(RETRY_CODE).equals(OK), Duration.ofMillis(PUBLISH_RESPONSE_TIME_THRESHOLD)).on(
         exec(
             http(VALIDATE_GALLERY_PUBLISH)
-                .get(GALLERY_PUBLISH_URL)
+                .get(PUBLISHER_URL)
                 .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
                 .check(status().saveAs(RETRY_CODE)))
             .pause(1)
     ).exec(
         http(VALIDATE_GALLERY_PUBLISH)
-            .get(GALLERY_PUBLISH_URL)
+            .get(PUBLISHER_URL)
             .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
             .check(status().is(OK).saveAs(RETRY_CODE)));
   }
