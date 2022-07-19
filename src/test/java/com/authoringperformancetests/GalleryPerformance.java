@@ -19,12 +19,13 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static com.authoringperformancetests.RequestUtils.AGENT_HEADER;
-import static com.authoringperformancetests.RequestUtils.ARTICLE_PUBLISH_URL;
 import static com.authoringperformancetests.RequestUtils.BASE_URL;
 import static com.authoringperformancetests.RequestUtils.CONTENT_ENDPOINT;
 import static com.authoringperformancetests.RequestUtils.CONTENT_TYPE;
 import static com.authoringperformancetests.RequestUtils.CREATED;
+import static com.authoringperformancetests.RequestUtils.CREATE_ARTICLE;
 import static com.authoringperformancetests.RequestUtils.CREATE_GALLERY;
+import static com.authoringperformancetests.RequestUtils.CREATE_RESPONSE_TIME_THRESHOLD;
 import static com.authoringperformancetests.RequestUtils.DEFAULT_SESSION_ATTRIBUTE_VALUE;
 import static com.authoringperformancetests.RequestUtils.GALLERY_CREATE_JSON;
 import static com.authoringperformancetests.RequestUtils.GALLERY_ID;
@@ -33,18 +34,24 @@ import static com.authoringperformancetests.RequestUtils.GALLERY_UPDATE_JSON;
 import static com.authoringperformancetests.RequestUtils.HEADER_JSON;
 import static com.authoringperformancetests.RequestUtils.NOT_FOUND;
 import static com.authoringperformancetests.RequestUtils.OK;
-import static com.authoringperformancetests.RequestUtils.PUBLISHER_URL;
+import static com.authoringperformancetests.RequestUtils.PERCENTILE;
+import static com.authoringperformancetests.RequestUtils.PUBLISH_ARTICLE;
 import static com.authoringperformancetests.RequestUtils.PUBLISH_ENDPOINT;
 import static com.authoringperformancetests.RequestUtils.PUBLISH_GALLERY;
 import static com.authoringperformancetests.RequestUtils.PUBLISH_JSON;
+import static com.authoringperformancetests.RequestUtils.PUBLISH_RESPONSE_TIME_THRESHOLD;
 import static com.authoringperformancetests.RequestUtils.RETRY_CODE;
 import static com.authoringperformancetests.RequestUtils.TIME;
+import static com.authoringperformancetests.RequestUtils.UPDATE_ARTICLE;
 import static com.authoringperformancetests.RequestUtils.UPDATE_ENDPOINT;
 import static com.authoringperformancetests.RequestUtils.UPDATE_GALLERY;
+import static com.authoringperformancetests.RequestUtils.UPDATE_RESPONSE_TIME_THRESHOLD;
 import static com.authoringperformancetests.RequestUtils.USERS;
+import static com.authoringperformancetests.RequestUtils.VALIDATE_GALLERY_PUBLISH;
 import static com.authoringperformancetests.RequestUtils.VALIDATE_PUBLISH;
 import static io.gatling.javaapi.core.CoreDsl.StringBody;
-import static io.gatling.javaapi.core.CoreDsl.asLongAs;
+import static io.gatling.javaapi.core.CoreDsl.asLongAsDuring;
+import static io.gatling.javaapi.core.CoreDsl.details;
 import static io.gatling.javaapi.core.CoreDsl.doIf;
 import static io.gatling.javaapi.core.CoreDsl.exec;
 import static io.gatling.javaapi.core.CoreDsl.jsonPath;
@@ -82,10 +89,27 @@ public class GalleryPerformance extends Simulation {
           .pause(1)
           .exec(updateGalleryRequest())
           .pause(1)
-          .exec(publishGalleryRequest());
+          .exec(publishGalleryRequest())
+          .pause(1)
+          .exec(validatePublishedGallery());
 
   public GalleryPerformance() throws IOException {
     this.setUp(scn.injectOpen(rampUsers(USERS).during(Duration.ofMinutes(TIME))))
+        .assertions(
+            details(CREATE_GALLERY)
+                .responseTime()
+                .percentile(PERCENTILE)
+                .lt(CREATE_RESPONSE_TIME_THRESHOLD),
+            details(UPDATE_GALLERY)
+                .responseTime()
+                .percentile(PERCENTILE)
+                .lt(UPDATE_RESPONSE_TIME_THRESHOLD),
+            details(PUBLISH_GALLERY)
+                .responseTime()
+                .percentile(PERCENTILE)
+                .lt(PUBLISH_RESPONSE_TIME_THRESHOLD),
+            details(VALIDATE_GALLERY_PUBLISH).successfulRequests().percent().is(100.0)
+        )
         .protocols(httpProtocol);
   }
 
@@ -133,14 +157,19 @@ public class GalleryPerformance extends Simulation {
                     .check(status().is(CREATED))));
   }
 
-  private ChainBuilder validatePublishedArticle() {
-    return doIf(session -> (!session.get(ARTICLE_PUBLISH_URL).equals(DEFAULT_SESSION_ATTRIBUTE_VALUE)))
-        .then(
-            asLongAs(session -> session.get(RETRY_CODE).equals(NOT_FOUND))
-                .on(
-                    exec(
-                        http(VALIDATE_PUBLISH)
-                            .get(PUBLISHER_URL)
-                            .check(status().not(NOT_FOUND).saveAs(RETRY_CODE)))));
+  private ChainBuilder validatePublishedGallery() {
+
+    return asLongAsDuring(session -> !session.get(RETRY_CODE).equals(OK), Duration.ofMillis(PUBLISH_RESPONSE_TIME_THRESHOLD)).on(
+        exec(
+            http(VALIDATE_GALLERY_PUBLISH)
+                .get(GALLERY_PUBLISH_URL)
+                .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
+                .check(status().saveAs(RETRY_CODE)))
+            .pause(1)
+    ).exec(
+        http(VALIDATE_GALLERY_PUBLISH)
+            .get(GALLERY_PUBLISH_URL)
+            .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
+            .check(status().is(OK).saveAs(RETRY_CODE)));
   }
 }
