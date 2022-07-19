@@ -5,12 +5,7 @@ import static com.authoringperformancetests.AssertionGenerator.*;
 import static com.authoringperformancetests.RequestUtils.ARTICLE_CREATE_JSON;
 import static com.authoringperformancetests.RequestUtils.ARTICLE_UPDATE_JSON;
 import static com.authoringperformancetests.RequestUtils.CREATE_ARTICLE;
-import static com.authoringperformancetests.RequestUtils.DEFAULT_SESSION_ATTRIBUTE_VALUE;
-import static com.authoringperformancetests.RequestUtils.ID;
-import static com.authoringperformancetests.RequestUtils.NOT_FOUND;
-import static com.authoringperformancetests.RequestUtils.PUBLISHED_URL;
 import static com.authoringperformancetests.RequestUtils.PUBLISH_ARTICLE;
-import static com.authoringperformancetests.RequestUtils.RETRY_CODE;
 import static com.authoringperformancetests.RequestUtils.TIME;
 import static com.authoringperformancetests.RequestUtils.UPDATE_ARTICLE;
 import static com.authoringperformancetests.RequestUtils.USERS;
@@ -34,6 +29,7 @@ public class ArticlePerformance extends Simulation {
                 )
         )
         .assertions(
+            globalErrorThresholds(),
             createThresholds(CREATE_ARTICLE),
             updateThresholds(UPDATE_ARTICLE),
             publishThresholds(PUBLISH_ARTICLE),

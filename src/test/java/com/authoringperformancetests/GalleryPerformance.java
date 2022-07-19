@@ -1,6 +1,7 @@
 package com.authoringperformancetests;
 
 import static com.authoringperformancetests.AssertionGenerator.createThresholds;
+import static com.authoringperformancetests.AssertionGenerator.globalErrorThresholds;
 import static com.authoringperformancetests.AssertionGenerator.publishThresholds;
 import static com.authoringperformancetests.AssertionGenerator.updateThresholds;
 import static com.authoringperformancetests.AssertionGenerator.validatePublishThresholds;
@@ -37,6 +38,7 @@ public class GalleryPerformance extends Simulation {
                     .during(Duration.ofMinutes(TIME))
             )
         ).assertions(
+            globalErrorThresholds(),
             createThresholds(CREATE_GALLERY),
             updateThresholds(UPDATE_GALLERY),
             publishThresholds(PUBLISH_GALLERY),
