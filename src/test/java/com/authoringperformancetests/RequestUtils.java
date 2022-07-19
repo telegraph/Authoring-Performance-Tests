@@ -11,14 +11,10 @@ public class RequestUtils {
 
   public static final String HEADER_JSON = "application/json";
   public static final String AGENT_HEADER = "Performance Testing";
-  public static final String ARTICLE_ID = "id";
-  public static final String GALLERY_ID = "id";
-  public static final String LIVE_ARTICLE_ID = "id";
+  public static final String ID = "id";
   public static final String LIVE_POSTS_ID = "postsId";
-  public static final String ARTICLE_PUBLISH_URL = "publishedUrl";
-  public static final String GALLERY_PUBLISH_URL = "publishedUrl";
-  public static final String LIVE_ARTICLE_PUBLISH_URL = "publishedUrl";
-  public static final String LIVE_POSTS_PUBLISH_URL = "publishedUrl";
+  public static final String PUBLISHED_URL = "publishedUrl";
+  public static final String POSTS_PUBLISHED_URL = "postsPublishedUrl";
   public static final String RETRY_CODE = "retryCode";
   public static final String DEFAULT_SESSION_ATTRIBUTE_VALUE = "_";
   public static final String CONTENT_TYPE = "Content-Type";
@@ -40,8 +36,8 @@ public class RequestUtils {
   public static final String PUBLISH_LIVE_ARTICLE = "publish-live-article-workflow-request";
   public static final String VALIDATE_LIVE_ARTICLE_PUBLISH = "validate-gallery-published";
 
-  public static final Integer USERS = 70;
-  public static final Integer TIME = 2;
+  public static final Integer USERS = 1;
+  public static final Integer TIME = 1;
   public static final double PERCENTILE = 95.0;
   public static final Integer CREATE_RESPONSE_TIME_THRESHOLD = 3500;
   public static final Integer UPDATE_RESPONSE_TIME_THRESHOLD = 2500;
@@ -58,5 +54,8 @@ public class RequestUtils {
   public static final String LIVE_ARTICLE_UPDATE_JSON = "src/main/resources/LiveArticleUpdate.json";
   public static final String LIVE_ARTICLE_CREATE_JSON = "src/main/resources/LiveArticleCreate.json";
   public static final String PUBLISH_JSON = "src/main/resources/Publish.json";
+
+  public static final String CREDENTIALS_PREPROD_USERNAME = "Telegraph";
+  public static final String CREDENTIALS_PREPROD_PASSWORD = "VO9?~A2BC*VtqG";
 
 }
