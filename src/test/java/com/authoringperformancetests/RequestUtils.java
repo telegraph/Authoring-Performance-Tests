@@ -3,8 +3,9 @@ package com.authoringperformancetests;
 public class RequestUtils {
 
   public static final String BASE_URL = "https://chase-preprod-ams.aws-preprod.telegraph.co.uk/bin/telegraph/author/v2";
-  public static final String PUBLISHER_URL = "https://chase-preprod-ams.aws-preprod.telegraph.co.uk${publishedUrl}/";
+  public static final String PUBLISHER_URL = "https://qa8.telegraph.co.uk/american-football/2022/07/18/pasdfest/";
   public static final String CONTENT_ENDPOINT = "/content";
+  public static final String CONTENT_ENDPOINT_TEST = "/content?id=#{retryCode}";
   public static final String UPDATE_ENDPOINT = CONTENT_ENDPOINT + "?id=#{id}";
   public static final String UPDATE_LIVE_POSTS_ENDPOINT = CONTENT_ENDPOINT + "?id=#{postsId}";
   public static final String PUBLISH_ENDPOINT = CONTENT_ENDPOINT + "/workflow";

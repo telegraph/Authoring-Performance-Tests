@@ -20,7 +20,8 @@ import java.util.stream.Stream;
 
 import static com.authoringperformancetests.RequestUtils.*;
 import static io.gatling.javaapi.core.CoreDsl.StringBody;
-import static io.gatling.javaapi.core.CoreDsl.asLongAs;
+import static io.gatling.javaapi.core.CoreDsl.asLongAsDuring;
+import static io.gatling.javaapi.core.CoreDsl.details;
 import static io.gatling.javaapi.core.CoreDsl.doIf;
 import static io.gatling.javaapi.core.CoreDsl.exec;
 import static io.gatling.javaapi.core.CoreDsl.jsonPath;
@@ -58,10 +59,27 @@ public class ArticlePerformance extends Simulation {
           .pause(1)
           .exec(updateArticleRequest())
           .pause(1)
-          .exec(publishArticleRequest());
+          .exec(publishArticleRequest())
+          .pause(1)
+          .exec(validatePublishedArticle());
 
   public ArticlePerformance() throws IOException {
     this.setUp(scn.injectOpen(rampUsers(USERS).during(Duration.ofMinutes(TIME))))
+        .assertions(
+            details(CREATE_ARTICLE)
+                .responseTime()
+                .percentile(PERCENTILE)
+                .lt(CREATE_RESPONSE_TIME_THRESHOLD),
+            details(UPDATE_ARTICLE)
+                .responseTime()
+                .percentile(PERCENTILE)
+                .lt(UPDATE_RESPONSE_TIME_THRESHOLD),
+            details(PUBLISH_ARTICLE)
+                .responseTime()
+                .percentile(PERCENTILE)
+                .lt(PUBLISH_RESPONSE_TIME_THRESHOLD),
+            details(VALIDATE_PUBLISH).successfulRequests().percent().is(100.0)
+        )
         .protocols(httpProtocol);
   }
 
@@ -106,18 +124,22 @@ public class ArticlePerformance extends Simulation {
                     .header(CONTENT_TYPE, HEADER_JSON)
                     .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
                     .body(StringBody(body))
-                    .check(status().is(CREATED))));
+                    .check(status().is(CREATED).saveAs(RETRY_CODE))));
   }
 
-
   private ChainBuilder validatePublishedArticle() {
-    return doIf(session -> (!session.get(ARTICLE_PUBLISH_URL).equals(DEFAULT_SESSION_ATTRIBUTE_VALUE)))
-        .then(
-            asLongAs(session -> session.get(RETRY_CODE).equals(NOT_FOUND))
-                .on(
-                    exec(
-                        http(VALIDATE_PUBLISH)
-                            .get(PUBLISHER_URL)
-                            .check(status().not(NOT_FOUND).saveAs(RETRY_CODE)))));
+
+    return asLongAsDuring(session -> !session.get(RETRY_CODE).equals(OK), Duration.ofMillis(PUBLISH_RESPONSE_TIME_THRESHOLD)).on(
+        exec(
+            http(VALIDATE_PUBLISH)
+                .get(PUBLISHER_URL)
+                .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
+                .check(status().saveAs(RETRY_CODE)))
+            .pause(1)
+    ).exec(
+        http(VALIDATE_PUBLISH)
+            .get(PUBLISHER_URL)
+            .basicAuth("Telegraph", "VO9?~A2BC*VtqG")
+            .check(status().is(OK).saveAs(RETRY_CODE)));
   }
 }
