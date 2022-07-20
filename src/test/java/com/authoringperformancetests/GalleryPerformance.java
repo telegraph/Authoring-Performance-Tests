@@ -1,5 +1,5 @@
 package com.authoringperformancetests;
-
+/*
 import static com.authoringperformancetests.AssertionGenerator.createThresholds;
 import static com.authoringperformancetests.AssertionGenerator.globalErrorThresholds;
 import static com.authoringperformancetests.AssertionGenerator.publishThresholds;
@@ -58,4 +58,4 @@ public class GalleryPerformance extends Simulation {
         .pause(1)
         .exec(validatePublishedArticle(VALIDATE_GALLERY_PUBLISH));
   }
-}
+}*/
