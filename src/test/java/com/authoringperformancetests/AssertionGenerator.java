@@ -40,7 +40,7 @@ public final class AssertionGenerator {
   }
 
   public static Assertion validatePublishThresholds(String requestName) {
-    return details(requestName).successfulRequests().percent().is(100.0);
+    return details(requestName).successfulRequests().percent().gt(PERCENTILE);
   }
 
 
