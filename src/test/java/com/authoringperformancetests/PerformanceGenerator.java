@@ -68,6 +68,8 @@ public final class PerformanceGenerator {
   public static HttpProtocolBuilder generateHttpProtocol() {
     return http.baseUrl(BASE_URL)
         .acceptHeader(HEADER_JSON)
+        .header(CONTENT_TYPE, HEADER_JSON)
+        .basicAuth(CREDENTIALS_PREPROD_USERNAME, CREDENTIALS_PREPROD_PASSWORD)
         .userAgentHeader(AGENT_HEADER)
         .disableFollowRedirect();
   }
@@ -78,8 +80,6 @@ public final class PerformanceGenerator {
 
     return http(requestName)
         .post(CONTENT_ENDPOINT)
-        .header(CONTENT_TYPE, HEADER_JSON)
-        .basicAuth(CREDENTIALS_PREPROD_USERNAME, CREDENTIALS_PREPROD_PASSWORD)
         .body(StringBody(body))
         .check(status().is(CREATED))
         .check(jsonPath("$..id").exists().saveAs(ID));
@@ -94,8 +94,6 @@ public final class PerformanceGenerator {
             exec(
                 http(requestName)
                     .put(UPDATE_ENDPOINT)
-                    .header(CONTENT_TYPE, HEADER_JSON)
-                    .basicAuth(CREDENTIALS_PREPROD_USERNAME, CREDENTIALS_PREPROD_PASSWORD)
                     .body(StringBody(body))
                     .check(status().is(OK))
                     .check(jsonPath("$..externalPath").exists().saveAs(PUBLISHED_URL))));
@@ -110,8 +108,6 @@ public final class PerformanceGenerator {
             exec(
                 http(requestName)
                     .post(PUBLISH_ENDPOINT)
-                    .header(CONTENT_TYPE, HEADER_JSON)
-                    .basicAuth(CREDENTIALS_PREPROD_USERNAME, CREDENTIALS_PREPROD_PASSWORD)
                     .body(StringBody(body))
                     .check(status().is(CREATED).saveAs(RETRY_CODE))));
   }
@@ -122,13 +118,11 @@ public final class PerformanceGenerator {
         exec(
             http(requestName)
                 .get(PUBLISHER_URL)
-                .basicAuth(CREDENTIALS_PREPROD_USERNAME, CREDENTIALS_PREPROD_PASSWORD)
                 .check(status().saveAs(RETRY_CODE)))
             .pause(1)
     ).exec(
         http(requestName)
             .get(PUBLISHER_URL)
-            .basicAuth(CREDENTIALS_PREPROD_USERNAME, CREDENTIALS_PREPROD_PASSWORD)
             .check(status().is(OK).saveAs(RETRY_CODE)));
   }
 
