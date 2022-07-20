@@ -27,7 +27,7 @@ import io.gatling.javaapi.core.ScenarioBuilder;
 import io.gatling.javaapi.core.Simulation;
 import java.io.IOException;
 import java.time.Duration;
-/*
+
 public class GalleryPerformance extends Simulation {
 
   public GalleryPerformance() throws IOException {
@@ -58,4 +58,4 @@ public class GalleryPerformance extends Simulation {
         .pause(1)
         .exec(validatePublishedArticle(VALIDATE_GALLERY_PUBLISH));
   }
-}*/
+}

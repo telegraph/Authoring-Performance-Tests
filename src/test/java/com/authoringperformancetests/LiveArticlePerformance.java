@@ -1,5 +1,5 @@
 package com.authoringperformancetests;
-/*
+
 import static com.authoringperformancetests.AssertionGenerator.createThresholds;
 import static com.authoringperformancetests.AssertionGenerator.globalErrorThresholds;
 import static com.authoringperformancetests.AssertionGenerator.publishThresholds;
@@ -138,4 +138,4 @@ public class LiveArticlePerformance extends Simulation {
                     .body(StringBody(body))
                     .check(status().is(CREATED))));
   }
-}*/
+}

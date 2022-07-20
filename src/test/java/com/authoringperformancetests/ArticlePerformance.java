@@ -1,5 +1,5 @@
 package com.authoringperformancetests;
-/*
+
 import static com.authoringperformancetests.PerformanceGenerator.*;
 import static com.authoringperformancetests.AssertionGenerator.*;
 import static com.authoringperformancetests.RequestUtils.ARTICLE_CREATE_JSON;
@@ -24,7 +24,6 @@ public class ArticlePerformance extends Simulation {
     this.setUp(
             createArticleScenario()
                 .injectOpen(
-                    //                    OpenInjectionStep.atOnceUsers(USERS)
                     rampUsers(USERS)
                         .during(Duration.ofMinutes(TIME))
                 )
@@ -52,4 +51,4 @@ public class ArticlePerformance extends Simulation {
         .pause(1)
         .exec(validatePublishedArticle(VALIDATE_PUBLISH));
   }
-}*/
+}

@@ -34,13 +34,13 @@ public class RequestUtils {
   public static final String UPDATE_LIVE_POSTS = "update-live-posts-request";
   public static final String PUBLISH_LIVE_POSTS = "publish-live-posts-workflow-request";
   public static final String PUBLISH_LIVE_ARTICLE = "publish-live-article-workflow-request";
-  public static final String VALIDATE_LIVE_ARTICLE_PUBLISH = "validate-live-article-published";
+  public static final String VALIDATE_LIVE_ARTICLE_PUBLISH = "validate-gallery-published";
 
   public static final Integer USERS = 70;
   public static final Integer TIME = 2;
   public static final double PERCENTILE = 95.0;
-  public static final Integer CREATE_RESPONSE_TIME_THRESHOLD = 7000;
-  public static final Integer UPDATE_RESPONSE_TIME_THRESHOLD = 5000;
+  public static final Integer CREATE_RESPONSE_TIME_THRESHOLD = 3500;
+  public static final Integer UPDATE_RESPONSE_TIME_THRESHOLD = 2500;
   public static final Integer PUBLISH_RESPONSE_TIME_THRESHOLD = 60000;
   public static final Integer NOT_FOUND = 404;
   public static final Integer OK = 200;
