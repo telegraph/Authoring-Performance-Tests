@@ -65,16 +65,24 @@ import static io.gatling.javaapi.core.CoreDsl.doIf;
 import static io.gatling.javaapi.core.CoreDsl.exec;
 import static io.gatling.javaapi.core.CoreDsl.jsonPath;
 import static io.gatling.javaapi.core.CoreDsl.rampUsers;
+import static io.gatling.javaapi.core.CoreDsl.rampUsersPerSec;
+import static io.gatling.javaapi.core.CoreDsl.stressPeakUsers;
 import static io.gatling.javaapi.http.HttpDsl.http;
 import static io.gatling.javaapi.http.HttpDsl.status;
 
 public class ContentPerformance extends Simulation {
 
   public ContentPerformance() throws IOException {
+    int articleUsers = Integer.getInteger("users", 140);
+    int galleryUsers = Integer.getInteger("users", 20);
+    int liveArticleUsers = Integer.getInteger("users", 30);
+    long totalTime = Long.getLong("totalTime", 5);
+
+
     this.setUp(
-            createArticleScenario().injectOpen(rampUsers(USERS).during(Duration.ofMinutes(TIME))),
-            createGalleryScenario().injectOpen(rampUsers(USERS).during(Duration.ofMinutes(TIME))),
-            createLiveArticleScenario().injectOpen(rampUsers(USERS).during(Duration.ofMinutes(TIME)))
+            createArticleScenario().injectOpen(rampUsers(articleUsers).during(Duration.ofMinutes(totalTime))),
+            createGalleryScenario().injectOpen(rampUsers(galleryUsers).during(Duration.ofMinutes(totalTime))),
+            createLiveArticleScenario().injectOpen(rampUsers(liveArticleUsers).during(Duration.ofMinutes(totalTime)))
         )
         .assertions(
             globalErrorThresholds(),

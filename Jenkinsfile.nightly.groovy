@@ -18,7 +18,7 @@ pipeline {
         }
         stage("Run Gatling") {
             steps {
-                sh '$MVNW_ALIAS gatling:test'
+                sh '$MVNW_ALIAS gatling:test -DarticleUsers=${env.ARTICLE_USERS} -DgalleryUsers=${env.GALLERY_USERS} -DliveArticleUsers=${env.LIVE_ARTICLE_USERS}  -DtotalTime=${env.TIME_MINUTES}'
             }
             post {
                 always {
