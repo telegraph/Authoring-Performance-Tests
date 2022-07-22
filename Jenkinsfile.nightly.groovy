@@ -8,6 +8,10 @@ pipeline {
     environment {
         MVNW_ALIAS = "./mvnw --no-transfer-progress"
         NOTIFICATIONS_CHANNEL = '#authoring-poc-performance'
+        ARTICLE_USERS = "${env.ARTICLE_USERS}"
+        LIVE_ARTICLE_USERS = "${env.ARTICLE_USERS}"
+        GALLERY_USERS = "${env.GALLERY_USERS}"
+        TIME_MINUTES = "${env.TIME_MINUTES}"
     }
 
     stages {
@@ -18,7 +22,7 @@ pipeline {
         }
         stage("Run Gatling") {
             steps {
-                sh '$MVNW_ALIAS gatling:test -DarticleUsers=${env.ARTICLE_USERS} -DgalleryUsers=${env.GALLERY_USERS} -DliveArticleUsers=${env.LIVE_ARTICLE_USERS}  -DtotalTime=${env.TIME_MINUTES}'
+                sh '$MVNW_ALIAS gatling:test -DarticleUsers=${ARTICLE_USERS} -DgalleryUsers=${GALLERY_USERS} -DliveArticleUsers=${LIVE_ARTICLE_USERS}  -DtotalTime=${TIME_MINUTES}'
             }
             post {
                 always {
