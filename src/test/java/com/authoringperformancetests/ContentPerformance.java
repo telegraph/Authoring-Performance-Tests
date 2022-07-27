@@ -2,14 +2,18 @@ package com.authoringperformancetests;
 
 import io.gatling.javaapi.core.ActionBuilder;
 import io.gatling.javaapi.core.ChainBuilder;
+import io.gatling.javaapi.core.ClosedInjectionStep;
 import io.gatling.javaapi.core.CoreDsl;
 import io.gatling.javaapi.core.ScenarioBuilder;
 import io.gatling.javaapi.core.Simulation;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.authoringperformancetests.AssertionGenerator.createThresholds;
 import static com.authoringperformancetests.AssertionGenerator.globalErrorThresholds;
@@ -50,39 +54,40 @@ import static com.authoringperformancetests.RequestUtils.PUBLISH_GALLERY;
 import static com.authoringperformancetests.RequestUtils.PUBLISH_JSON;
 import static com.authoringperformancetests.RequestUtils.PUBLISH_LIVE_ARTICLE;
 import static com.authoringperformancetests.RequestUtils.PUBLISH_LIVE_POSTS;
-import static com.authoringperformancetests.RequestUtils.TIME;
 import static com.authoringperformancetests.RequestUtils.UPDATE_ARTICLE;
 import static com.authoringperformancetests.RequestUtils.UPDATE_GALLERY;
 import static com.authoringperformancetests.RequestUtils.UPDATE_LIVE_ARTICLE;
 import static com.authoringperformancetests.RequestUtils.UPDATE_LIVE_POSTS;
 import static com.authoringperformancetests.RequestUtils.UPDATE_LIVE_POSTS_ENDPOINT;
-import static com.authoringperformancetests.RequestUtils.USERS;
 import static com.authoringperformancetests.RequestUtils.VALIDATE_GALLERY_PUBLISH;
 import static com.authoringperformancetests.RequestUtils.VALIDATE_LIVE_ARTICLE_PUBLISH;
 import static com.authoringperformancetests.RequestUtils.VALIDATE_PUBLISH;
 import static io.gatling.javaapi.core.CoreDsl.StringBody;
+import static io.gatling.javaapi.core.CoreDsl.constantConcurrentUsers;
 import static io.gatling.javaapi.core.CoreDsl.doIf;
 import static io.gatling.javaapi.core.CoreDsl.exec;
 import static io.gatling.javaapi.core.CoreDsl.jsonPath;
-import static io.gatling.javaapi.core.CoreDsl.rampUsers;
-import static io.gatling.javaapi.core.CoreDsl.rampUsersPerSec;
-import static io.gatling.javaapi.core.CoreDsl.stressPeakUsers;
 import static io.gatling.javaapi.http.HttpDsl.http;
 import static io.gatling.javaapi.http.HttpDsl.status;
 
 public class ContentPerformance extends Simulation {
 
   public ContentPerformance() throws IOException {
-    int articleUsers = Integer.getInteger("users", 140);
-    int galleryUsers = Integer.getInteger("users", 20);
-    int liveArticleUsers = Integer.getInteger("users", 30);
-    long totalTime = Long.getLong("totalTime", 5);
+    //int articleUsers = Integer.getInteger("users", 140);
+
+    List<InjectionStepUsers> users = getVirtualUsers();
 
 
     this.setUp(
-            createArticleScenario().injectOpen(rampUsers(articleUsers).during(Duration.ofMinutes(totalTime))),
-            createGalleryScenario().injectOpen(rampUsers(galleryUsers).during(Duration.ofMinutes(totalTime))),
-            createLiveArticleScenario().injectOpen(rampUsers(liveArticleUsers).during(Duration.ofMinutes(totalTime)))
+            createArticleScenario().injectClosed(
+                getArticleInjectionSteps(users)
+            ),
+            createGalleryScenario().injectClosed(
+                getGalleryInjectionSteps(users)
+            ),
+            createLiveArticleScenario().injectClosed(
+                getLiveArticleInjectionSteps(users)
+            )
         )
         .assertions(
             globalErrorThresholds(),
@@ -102,6 +107,51 @@ public class ContentPerformance extends Simulation {
             validatePublishThresholds(VALIDATE_LIVE_ARTICLE_PUBLISH)
         )
         .protocols(generateHttpProtocol());
+  }
+
+  private List<InjectionStepUsers> getVirtualUsers() {
+    List<InjectionStepUsers> users = new ArrayList<>();
+    try(BufferedReader br = new BufferedReader(new FileReader("src/main/resources/Users.csv"))) {
+      String line;
+      while ((line = br.readLine()) != null) {
+        String[] values = line.split(",");
+        InjectionStepUsers user = new InjectionStepUsers(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]));
+        users.add(user);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return users;
+  }
+
+  private ClosedInjectionStep[] getArticleInjectionSteps(List<InjectionStepUsers> users) {
+    List<ClosedInjectionStep> steps = new ArrayList<>();
+
+    for (InjectionStepUsers user : users) {
+      steps.add(constantConcurrentUsers(user.getArticleUsers()).during(60));
+    }
+
+    return steps.toArray(new ClosedInjectionStep[0]);
+  }
+
+  private ClosedInjectionStep[] getGalleryInjectionSteps(List<InjectionStepUsers> users) {
+    List<ClosedInjectionStep> steps = new ArrayList<>();
+
+    for (InjectionStepUsers user : users) {
+      steps.add(constantConcurrentUsers(user.getGalleryUsers()).during(60));
+    }
+
+    return steps.toArray(new ClosedInjectionStep[0]);
+  }
+
+  private ClosedInjectionStep[] getLiveArticleInjectionSteps(List<InjectionStepUsers> users) {
+    List<ClosedInjectionStep> steps = new ArrayList<>();
+
+    for (InjectionStepUsers user : users) {
+      steps.add(constantConcurrentUsers(user.getLiveArticleUsers()).during(60));
+    }
+
+    return steps.toArray(new ClosedInjectionStep[0]);
   }
 
 
