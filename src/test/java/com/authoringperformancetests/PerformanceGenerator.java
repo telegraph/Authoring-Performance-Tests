@@ -2,9 +2,12 @@ package com.authoringperformancetests;
 
 import static com.authoringperformancetests.RequestUtils.AGENT_HEADER;
 import static com.authoringperformancetests.RequestUtils.BASE_URL;
+import static com.authoringperformancetests.RequestUtils.BASE_URL_CS;
 import static com.authoringperformancetests.RequestUtils.CONTENT_ENDPOINT;
 import static com.authoringperformancetests.RequestUtils.CONTENT_TYPE;
 import static com.authoringperformancetests.RequestUtils.CREATED;
+import static com.authoringperformancetests.RequestUtils.CREDENTIALS_CS_PASSWORD;
+import static com.authoringperformancetests.RequestUtils.CREDENTIALS_CS_USERNAME;
 import static com.authoringperformancetests.RequestUtils.CREDENTIALS_PREPROD_PASSWORD;
 import static com.authoringperformancetests.RequestUtils.CREDENTIALS_PREPROD_USERNAME;
 import static com.authoringperformancetests.RequestUtils.DEFAULT_SESSION_ATTRIBUTE_VALUE;
@@ -32,6 +35,8 @@ import io.gatling.javaapi.core.ActionBuilder;
 import io.gatling.javaapi.core.ChainBuilder;
 import io.gatling.javaapi.core.Session;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
+import org.springframework.beans.factory.annotation.Value;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -66,10 +71,15 @@ public final class PerformanceGenerator {
   }
 
   public static HttpProtocolBuilder generateHttpProtocol() {
-    return http.baseUrl(BASE_URL)
+    String env = System.getProperty("env");
+
+    return http.baseUrl(env.equals("CS") ? BASE_URL_CS : BASE_URL)
         .acceptHeader(HEADER_JSON)
         .header(CONTENT_TYPE, HEADER_JSON)
-        .basicAuth(CREDENTIALS_PREPROD_USERNAME, CREDENTIALS_PREPROD_PASSWORD)
+        .basicAuth(
+            env.equals("CS") ? CREDENTIALS_CS_USERNAME : CREDENTIALS_PREPROD_USERNAME,
+            env.equals("CS") ? CREDENTIALS_CS_PASSWORD : CREDENTIALS_PREPROD_PASSWORD
+        )
         .userAgentHeader(AGENT_HEADER)
         .disableFollowRedirect();
   }

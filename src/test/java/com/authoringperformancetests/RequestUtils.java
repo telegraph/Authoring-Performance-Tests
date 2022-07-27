@@ -3,7 +3,9 @@ package com.authoringperformancetests;
 public class RequestUtils {
 
   public static final String BASE_URL = "https://chase-preprod-ams.aws-preprod.telegraph.co.uk/bin/telegraph/author/v2";
+  public static final String BASE_URL_CS = "https://chase-preprod-ams.aws-preprod.telegraph.co.uk/bin/telegraph/author/v2";
   public static final String PUBLISHER_URL = "https://preprod-ams.telegraph.co.uk/${publishedUrl}/";
+  public static final String PUBLISHER_URL_CS = "https://preprod-ams.telegraph.co.uk/${publishedUrl}/";
   public static final String CONTENT_ENDPOINT = "/content";
   public static final String UPDATE_ENDPOINT = CONTENT_ENDPOINT + "?id=#{id}";
   public static final String UPDATE_LIVE_POSTS_ENDPOINT = CONTENT_ENDPOINT + "?id=#{postsId}";
@@ -57,5 +59,7 @@ public class RequestUtils {
 
   public static final String CREDENTIALS_PREPROD_USERNAME = "Telegraph";
   public static final String CREDENTIALS_PREPROD_PASSWORD = "VO9?~A2BC*VtqG";
+  public static final String CREDENTIALS_CS_USERNAME = "Telegraph";
+  public static final String CREDENTIALS_CS_PASSWORD = "VO9?~A2BC*VtqG";
 
 }

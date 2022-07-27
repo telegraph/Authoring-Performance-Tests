@@ -73,7 +73,6 @@ import static io.gatling.javaapi.http.HttpDsl.status;
 public class ContentPerformance extends Simulation {
 
   public ContentPerformance() throws IOException {
-    //int articleUsers = Integer.getInteger("users", 140);
 
     List<InjectionStepUsers> users = getVirtualUsers();
 
