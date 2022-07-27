@@ -73,12 +73,12 @@ public final class PerformanceGenerator {
   public static HttpProtocolBuilder generateHttpProtocol() {
     String env = System.getProperty("env");
 
-    return http.baseUrl(env.equals("CS") ? BASE_URL_CS : BASE_URL)
+    return http.baseUrl(env.equals("CS preprod") ? BASE_URL_CS : BASE_URL)
         .acceptHeader(HEADER_JSON)
         .header(CONTENT_TYPE, HEADER_JSON)
         .basicAuth(
-            env.equals("CS") ? CREDENTIALS_CS_USERNAME : CREDENTIALS_PREPROD_USERNAME,
-            env.equals("CS") ? CREDENTIALS_CS_PASSWORD : CREDENTIALS_PREPROD_PASSWORD
+            env.equals("CS preprod") ? CREDENTIALS_CS_USERNAME : CREDENTIALS_PREPROD_USERNAME,
+            env.equals("CS preprod") ? CREDENTIALS_CS_PASSWORD : CREDENTIALS_PREPROD_PASSWORD
         )
         .userAgentHeader(AGENT_HEADER)
         .disableFollowRedirect();
