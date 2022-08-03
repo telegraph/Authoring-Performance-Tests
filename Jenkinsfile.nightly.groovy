@@ -8,6 +8,7 @@ pipeline {
     environment {
         MVNW_ALIAS = "./mvnw --no-transfer-progress"
         NOTIFICATIONS_CHANNEL = '#authoring-poc-performance'
+        ENV = "${env.ENV}"
     }
 
     stages {
@@ -18,7 +19,7 @@ pipeline {
         }
         stage("Run Gatling") {
             steps {
-                sh '$MVNW_ALIAS gatling:test'
+                sh '$MVNW_ALIAS gatling:test -Denv=${ENV}'
             }
             post {
                 always {

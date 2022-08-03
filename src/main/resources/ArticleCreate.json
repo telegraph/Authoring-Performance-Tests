@@ -1,9 +1,8 @@
 {
-  "headline": "Gatling test",
+  "headline": "Article Load Testing ${uuid}",
   "commentingStatus": false,
   "contentType": "article",
-  "kicker": "test",
   "evergreen": true,
-  "section": "/content/telegraph/news",
+  "section": "/content/telegraph/american-football",
   "storyType": "standard"
 }

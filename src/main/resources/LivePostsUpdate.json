@@ -6,14 +6,14 @@
       "posts": [
         {
           "type": "LIVE_POST",
-          "headline": "new post",
-          "timestamp": 1657018790224,
+          "headline": "This is the new post Headline",
+          "timestamp": 1657095727050,
           "body": {
             "type": "BODY",
             "components": [
               {
                 "type": "TEXT",
-                "value": "<p>this is the body of a new post</p>"
+                "value": "<p>Body component of the post</p>"
               }
             ]
           },

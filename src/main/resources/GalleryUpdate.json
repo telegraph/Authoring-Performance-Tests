@@ -2,8 +2,8 @@
   "commentingStatus": false,
   "components": [
     {
-      "id": "jcr:content/content/gallery-list",
       "type": "GALLERY",
+      "id": "jcr:content/content/gallery-list",
       "images": [
         {
           "type": "IMAGE",
@@ -47,38 +47,56 @@
           "type": "IMAGE",
           "imagePath": "/content/dam/karate/2022/08/02/SS16CG-THilfiger-057.JPG",
           "imageCropping": {
+            "selected": "landscape",
             "crops": {
+              "encryptedSuffix": "lSIRNQLqHCTApdIaIqqRsUCv19d5Ku2mMHK6fXUxZ1I",
               "landscape": {
-                "x": 0,
-                "y": 315,
-                "width": 10000,
-                "height": 9370
+                "croppedOriginalHeight": 1238,
+                "croppedOriginalWidth": 1981,
+                "height": 10000,
+                "width": 7414,
+                "x": 1294,
+                "y": 0
               },
               "portrait": {
-                "x": 2916,
-                "y": 0,
-                "width": 4170,
-                "height": 10000
+                "croppedOriginalHeight": 1238,
+                "croppedOriginalWidth": 774,
+                "height": 10000,
+                "width": 2897,
+                "x": 3552,
+                "y": 0
               },
               "square": {
-                "x": 1666,
-                "y": 0,
-                "width": 6670,
-                "height": 10000
+                "croppedOriginalHeight": 1238,
+                "croppedOriginalWidth": 1237,
+                "height": 10000,
+                "width": 4633,
+                "x": 2684,
+                "y": 0
               },
               "custom": {
-                "x": 0,
-                "y": 0,
+                "croppedOriginalHeight": 1238,
+                "croppedOriginalWidth": 2672,
+                "height": 10000,
                 "width": 10000,
-                "height": 10000
+                "x": 0,
+                "y": 0
               }
-            },
-            "selected": "landscape"
+            }
           },
-          "alt": "description for image 1",
-          "caption": "",
-          "credit": "",
           "source": "",
+          "metadata": {
+            "assetId": null,
+            "caption": null,
+            "credit": null,
+            "filename": "Screenshot-2022-06-13-at-10-47-12.png",
+            "headline": null,
+            "orientation": 0,
+            "source": null,
+            "sourceId": null,
+            "title": null,
+            "chpAndAssetId": ""
+          },
           "title": ""
         }
       ]

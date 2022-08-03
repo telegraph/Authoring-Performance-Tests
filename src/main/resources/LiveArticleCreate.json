@@ -1,0 +1,7 @@
+{
+  "headline": "Live Article Load Testing ${uuid}",
+  "contentType": "live-article",
+  "kicker": "kicker value",
+  "evergreen": true,
+  "section": "/content/telegraph/american-football"
+}
